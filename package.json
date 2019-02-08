@@ -1,0 +1,25 @@
+{
+  "name": "nodejs_assesment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gist.github.com/3ef1afe40518d94b05f3c87a05f29733.git"
+  },
+  "author": "Serhat Yalcin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gist.github.com/3ef1afe40518d94b05f3c87a05f29733"
+  },
+  "homepage": "https://gist.github.com/3ef1afe40518d94b05f3c87a05f29733",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.10",
+    "validator": "^10.11.0"
+  }
+}
