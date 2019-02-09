@@ -17,9 +17,14 @@
   },
   "homepage": "https://gist.github.com/3ef1afe40518d94b05f3c87a05f29733",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "mongodb": "^3.1.13",
     "mongoose": "^5.4.10",
+    "nodemon": "^1.18.9",
     "validator": "^10.11.0"
   }
 }

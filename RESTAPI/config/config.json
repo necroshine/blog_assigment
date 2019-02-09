@@ -1,0 +1,13 @@
+{
+    "test": {
+      "PORT": 9999,
+      "MONGODB_URI": "mongodb+srv://admin:9562757@microblog-hku9i.mongodb.net/test?retryWrites=true",
+      "JWT_SECRET": "poijasdf98435jpgfdpoij3"
+    },
+    "development": {
+      "PORT": 9999,
+      "MONGODB_URI": "mongodb+srv://admin:9562757@microblog-hku9i.mongodb.net/test?retryWrites=true",
+      "JWT_SECRET": "pojiaj234oi234oij234oij4"
+    }
+  }
+  

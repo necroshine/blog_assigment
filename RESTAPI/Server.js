@@ -1,13 +1,19 @@
-var express = require('express');
-var parser = require('body-parser');
+require('./config/config');
 
-var {mongoose} = require('./DB/mongoose');
+const express = require('express');
+const parser = require('body-parser');
+
+
+var userController = require('./Routes/UserController');
+var entryController = require('./Routes/EntryController');
 
 var app = express();
+app.use(parser.json());
 
-
-
-app.listen(9999,() => {
+app.use("/User",userController);
+app.use('/Entry',entryController)
+ 
+app.listen(process.env.PORT,() => {
     console.log('Server start listening on 9999');
 });
 
