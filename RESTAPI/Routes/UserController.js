@@ -1,6 +1,5 @@
 require('../config/config');
 var express = require('express');
-var mongoose = require('./../DB/mongoose');
 var UserSchema = require('./../Models/UserSchema');
 var authenticate = require('./../Middleware/Authenticate');
 const _ = require('lodash');
@@ -50,11 +49,25 @@ router.post('/Logout', authenticate, function(req,res){
 });
 
 router.post('/Follow',authenticate,function(req,res){
-
+    var FollowingID = _.pick(req.body,['FollowingID']).FollowingID;
+    console.log(FollowingID)
+    req.user.addFollowing(FollowingID).then(()=>{
+        res.status(200).send();
+    }
+    ,()=>{
+        res.status(400).send();
+    });
 });
 
-router.post('/Unfollow',authenticate,function(req,res){
-
+router.post('/Unfollow',authenticate,function(req,res){    
+    var FollowingID = _.pick(req.body,['FollowingID']).FollowingID;
+    
+    req.user.removeFollowing(FollowingID).then(()=>{
+        res.status(200).send();
+    }
+    ,()=>{
+        res.status(400).send();
+    });
 });
 
 module.exports = router;

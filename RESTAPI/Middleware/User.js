@@ -5,6 +5,22 @@ const crypto = require('bcryptjs');
 
 module.exports = function (UserSchema) {
 
+    UserSchema.methods.addFollowing = function(FollowingID){
+        var user = this;
+        return user.updateOne({
+        $push:{
+            Followings: {FollowingID}
+        }
+        });
+    };
+    UserSchema.methods.removeFollowing = function(FollowingID){
+        var user = this;
+        return user.updateOne({
+        $pull:{
+            Followings: {FollowingID}
+        }
+        });
+    };
     UserSchema.methods.removeToken = function (token) {
         var user = this;
 
