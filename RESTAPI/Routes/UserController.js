@@ -40,11 +40,20 @@ router.post('/Login',function (req,res){
 
 });
 
-router.post('/Logout',function(req,res){
-    res.send('Logout');
+router.post('/Logout', authenticate, function(req,res){
+    console.log(req.user);
+   req.user.removeToken(req.token).then(()=>{
+       res.status(200).send();
+   },() => {
+       res.status(400).send();
+   })
 });
 
 router.post('/Follow',authenticate,function(req,res){
+
+});
+
+router.post('/Unfollow',authenticate,function(req,res){
 
 });
 
