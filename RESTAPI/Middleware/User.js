@@ -3,8 +3,16 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const crypto = require('bcryptjs');
 
-module.exports = function(UserSchema) {
-UserSchema.statics.findByToken = function(token){
+module.exports = function(UserSchema) { 
+
+    UserSchema.methods.toJSON = function () {
+        var user = this;
+        var userObject = user.toObject();
+      
+        return _.pick(userObject, ['_id', 'DisplayName','AccountName','Email','Followers','Followings']);
+      };
+
+    UserSchema.statics.findByToken = function(token){
     var User = this;
     var decoded;
     try{
@@ -19,37 +27,46 @@ UserSchema.statics.findByToken = function(token){
         'tokens.access': 'auth'
     });
 
-};
+    };
+
 UserSchema.methods.generateAuthToken = function () {
+    
     var user = this;
     var access = 'auth';
     var token = jwt.sign({_id: user._id.toHexString(),access},process.env.JWT_SECRET).toString();
+    
     user.tokens = user.tokens.concat([{access,token}]);
 
     return user.save().then(() => {
+       
         return token;
     });
 };
-UserSchema.statics.findByCredentials = function(email,password) {
+UserSchema.statics.findByCredentials = function(Email,Password) {
     var User = this;
     
-    return User.findOne({email}).then((user) => {
+    return User.findOne({Email}).then((user) => {
+        
         if(!user)
         {
             return Promise.reject();
         }
-        return new Promise((resolve,reject) => {
-            crypto.compare(password,User.password,(err,res) =>{
-                if(res)
-                {
-                    resolve(User);
-                }
-                else
-                {
-                    reject();
-                }
+      
+        return new Promise((resolve,reject) => {              
+                crypto.compare(Password,user.Password,(err,res) =>{
+                
+                    if(res)
+                    {
+                        resolve(user);
+                    }
+                    else
+                    {               
+                        reject();
+                    }
+                }); 
             });
-        });
+            
+        
     });    
 };
 };

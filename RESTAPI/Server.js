@@ -2,7 +2,7 @@ require('./config/config');
 
 const express = require('express');
 const parser = require('body-parser');
-
+const mongoose = require('mongoose');
 
 var userController = require('./Routes/UserController');
 var entryController = require('./Routes/EntryController');

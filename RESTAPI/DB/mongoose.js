@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb+srv://admin:9562757@microblog-hku9i.mongodb.net/test?retryWrites=true',{useNewUrlParser: true},(err)=>{
+mongoose.connect(process.env.MONGODB_URI,{useNewUrlParser: true},(err)=>{
     if(err)
     {
         console.log(`Error while connecting to MongoDB: ${err.message}`);
@@ -13,5 +13,5 @@ mongoose.connect('mongodb+srv://admin:9562757@microblog-hku9i.mongodb.net/test?r
     }
 });
 
-module.exports = {mongoose};
+module.exports = mongoose;
 

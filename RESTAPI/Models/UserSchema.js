@@ -1,20 +1,22 @@
-const mongoose = require('mongoose');
+const {ObjectID} = require('mongodb');
+const mongoose = require('./../DB/mongoose');
 const validator = require('validator');
+const crypto = require('bcryptjs');
 
 var UserSchema = mongoose.Schema({
-    displayname:{
+    DisplayName:{
         type: String,
         required: true,
         trim: true,
         minlength: 1
     },
-    accountname:{
+    AccountName:{
         type: String,
         required: true,
         trim: true,
         minlength: 1
     },
-    email:{
+    Email:{
         type: String,
         required: true,
         trim: true,
@@ -26,7 +28,7 @@ var UserSchema = mongoose.Schema({
         }
 
     },
-    password:{
+    Password:{
         type: String,
         required: true,        
         minlength: 6,
@@ -41,7 +43,18 @@ var UserSchema = mongoose.Schema({
           type: String,
           required: true
         }
-      }]
+      }],
+      Followers: [{
+          FollowerID: {
+              type: ObjectID
+          }
+      }],
+      Followings: [{
+        FollowingID: {
+            type: ObjectID
+        }
+    }]
+
 });
 
 require('./../Middleware/User')(UserSchema);
@@ -49,15 +62,21 @@ require('./../Middleware/User')(UserSchema);
 
 UserSchema.pre('save',function(next){
     var user = this;
-    if(user.isModified('password'))
-    {
+    if(user.isModified('Password'))
+    {       
         crypto.genSalt(10,(err,salt)=>{
-            crypto.hash(user.password,salt,(err,hash)=>{
-                user.password=hash;
+            crypto.hash(user.Password,salt,(err,hash)=>{                
+                user.Password=hash;
+ 
                 next();
             });
         });
     }
+    else
+    {
+        next();
+    }
+
 });
 var User = mongoose.model('User', UserSchema);
 module.exports = User;
