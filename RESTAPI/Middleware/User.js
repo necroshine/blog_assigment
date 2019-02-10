@@ -51,7 +51,7 @@ module.exports = function (UserSchema) {
             '_id': decoded._id,
             'tokens.token': token,
             'tokens.access': 'auth'
-        });
+        },{'Followings._id':0});
 
     };
 
