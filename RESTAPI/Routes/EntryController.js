@@ -20,7 +20,7 @@ router.get('/',authenticate,function(req,res){
 router.post('/Post',authenticate,(req,res) => {
     var user = req.user;
     var body = _.pick(req.body,['Title','Text']);
-    console.log(body);
+   // console.log(body);
     var entry = new EntrySchema(body);
     entry.Owner = user._id;
     entry.save().then((doc) => {
