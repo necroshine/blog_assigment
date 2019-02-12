@@ -13,8 +13,7 @@ router.get("/",(req,res)=>{
 
 router.post("/",(req,res)=>{
     var user = _.pick(req.body,['DisplayName','AccountName','Email', 'Password']);
-    console.log(req.body);
-    console.log(user);
+ 
     var options = {
         method: 'POST',
         uri: 'http://localhost:9999/User/Signup',
@@ -25,14 +24,18 @@ router.post("/",(req,res)=>{
             'content-type': 'application/json'
         } // Automatically stringifies the body to JSON
     };
-    rh.SendRequest(options).then((callbackResponse) => {        
-        console.log(callbackResponse.statusCode);
-        console.log(callbackResponse.headers['x-auth']);
+    rh.SendRequest(options).then((callbackResponse) => {                
+        var authToken = callbackResponse.headers['x-auth'];
+        var userObject = _.pick(callbackResponse.body,['DisplayName','AccountName','Email','_id','Followers','Followings']);
+        console.log(req.session);        
+        req.session.currentuser = JSON.stringify(userObject);
+        req.session.token = authToken;
+        console.log(req.session.token);
         res.status(200).send();
     }).catch((e)=>{
         console.log(e.message);
         res.status(400).send();
     });
-})
+});
 
 module.exports = router;

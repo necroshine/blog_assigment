@@ -6,6 +6,6 @@ var router = express.Router();
 
 router.get("/",(req,res)=>{
     res.render('Home.hbs');
-})
+});
 
 module.exports = router;
